@@ -10,8 +10,6 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract Eyes is ERC721, ERC721Enumerable, Ownable {
     uint256 private _nextTokenId;
 
-    uint ownerMints = 0;
-
     uint256 public maxSupply;
 
     uint public price;
@@ -22,14 +20,6 @@ contract Eyes is ERC721, ERC721Enumerable, Ownable {
         maxSupply = _maxSupply
         price = _price
     {}
-
-    function ownerMint(address to) public onlyOwner returns (uint256) {
-        require(ownerMints < 100, "Owner can only mint 100");
-        require(tokenId < maxSupply, "Max supply reached.");
-        uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
-        return tokenId;
-    }
 
     function mint(address to) public payable returns (uint256) {
         require(msg.value >= price, "Insufficient funds. You must pay the price.");
