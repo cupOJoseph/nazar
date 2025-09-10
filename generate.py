@@ -26,24 +26,40 @@ lens_colors = [
     "#00544d",
     ]
 
-sclera_colors = [
-
+sclera_colors = [ 
+    "#dfeffa",
+    "#a7d8f5",
+    "#dbdbfd",
+    "#c5baee",
+    "#eec86b",
+    "#b2baee",
+    "#c0ff8b",
+    "#a1daff",
+    "#adfff4",
 ]
 
 iris_colors = [
-
+    "#07a4f2",
+    "#51b0f3",
+    "#9faef9",
+    "#8b70ee",
+    "#eea706",
+    "#7180ee",
+    "#68b200",
+    "#0095ff",
+    "#47a1a4",
 ]
 
 pupil_colors = [
-    030309, 
-    00243e
-    3f3f7d
-    280171
-    714400
-    000057
-    1d3100
-    00223a
-    002d29
+    "#030309", 
+    "#00243e",
+    "#3f3f7d",
+    "#280171",
+    "#714400",
+    "#000057",
+    "#1d3100",
+    "#00223a",
+    "#002d29",
 ]
 
     """Load image file (PNG or SVG)"""
