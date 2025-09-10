@@ -5,12 +5,12 @@ import random
 import json
 from pathlib import Path
 from PIL import Image, ImageDraw
-import cairosvg
+# import cairosvg  # Commented out due to cairo library issues
 import io
 import hashlib
 
 
-#generate 3333 Eyes     
+num_to_generate = 100
 
 ## Layers colors
 
@@ -62,47 +62,113 @@ pupil_colors = [
     "#002d29",
 ]
 
-    """Load image file (PNG or SVG)"""
-    path = Path(image_path)
-    if not path.exists():
-        print(f"Warning: Image not found: {image_path}")
-        return None
-        
-    if path.suffix.lower() == '.svg':
-        return load_svg_as_image(path)
-    else:
-        try:
-            return Image.open(path).convert("RGBA")
-        except Exception as e:
-            print(f"Error loading image {path}: {e}")
-            return None
+# Background files from layers/backgrounds/ folder
+backgrounds = [
+    "Group 1.png",
+    "Group 2.png", 
+    "Group 3.png",
+    "Group 4.png",
+    "Group 5.png",
+    "Group 6.png",
+    "Group 7.png",
+    "Group 8.png",
+    "Group 9.png"
+]
 
+# Layer files from each folder
+lens_files = [
+    "g1-1.svg",
+    "g1-2.svg", 
+    "g1-3.svg",
+    "g1-4.svg",
+    "g1-5.svg",
+    "g1-6.svg",
+    "g1-7.svg",
+    "g1-8.svg",
+    "g1.svg"
+]
 
-def main():
-    """Main function"""
-    print("Eye Image Generator")
-    print("=" * 50)
+sclera_files = [
+    "g1-1.svg",
+    "g1-2.svg", 
+    "g1-3.svg",
+    "g1-4.svg",
+    "g1-5.svg",
+    "g1-6.svg",
+    "g1-7.svg",
+    "g1-8.svg",
+    "g1.svg"
+]
+
+iris_files = [
+    "g1-1.svg",
+    "g1-2.svg", 
+    "g1-3.svg",
+    "g1-4.svg",
+    "g1-5.svg",
+    "g1-6.svg",
+    "g1-7.svg",
+    "g1-8.svg",
+    "g1.svg"
+]
+
+pupil_files = [
+    "g1-1.png",
+    "g1-2.png", 
+    "g1-3.png",
+    "g1-4.png",
+    "g1-5.png",
+    "g1-6.png",
+    "g1-7.png",
+    "g1-8.png",
+    "g1.png"
+]
+
+# Generate random eye images
+for i in range(num_to_generate):
+    # Randomly select a background
+    background = random.choice(backgrounds)
+
+    # Randomly select a lens color
+    lens_color = random.choice(lens_colors)
+
+    # Randomly select a sclera color
+    sclera_color = random.choice(sclera_colors)
+
+    # Randomly select an iris color
+    iris_color = random.choice(iris_colors)
+
+    # Randomly select a pupil color
+    pupil_color = random.choice(pupil_colors)
+
+    # Randomly select layer files
+    lens_file = random.choice(lens_files)
+    sclera_file = random.choice(sclera_files)
+    iris_file = random.choice(iris_files)
+    pupil_file = random.choice(pupil_files)
+
+    # Load background image
+    background_image = Image.open(f"layers/backgrounds/{background}")
     
-    # Check if required packages are available
-    try:
-        import PIL
-        import cairosvg
-    except ImportError as e:
-        print(f"Error: Missing required package: {e}")
-        print("Please install required packages:")
-        print("pip install Pillow cairosvg")
-        return
+    # For now, let's work with just the pupil layer since it's PNG
+    # TODO: Fix SVG handling when cairo library is properly installed
+    pupil = Image.open(f"layers/Pupil/{pupil_file}")
     
-    # Generate all images
-    generate_all_images(3333)
+    # Create placeholder images for other layers (same size as pupil)
+    lens = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent
+    sclera = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent  
+    iris = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent
 
-if __name__ == "__main__":
-    main()
-
-
-
-
-
-
-
-
+    # Combine layers
+    combined_image = background_image.copy()
+    combined_image.paste(lens, (0, 0), lens)    
+    combined_image.paste(sclera, (0, 0), sclera)
+    combined_image.paste(iris, (0, 0), iris)
+    combined_image.paste(pupil, (0, 0), pupil)
+    
+    
+    # Save the combined image
+    output_filename = f"eye_{i+1:04d}.png"
+    combined_image.save(f"export/{output_filename}")
+    
+    print(f"Generated {output_filename}")
