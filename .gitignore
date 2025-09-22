@@ -208,4 +208,6 @@ __marimo__/
 layers/.DS_Store
 eye_layers/.DS_Store
 .DS_Store
-.DS_Store
+
+/export
+/jsons

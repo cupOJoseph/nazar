@@ -10,165 +10,188 @@ import io
 import hashlib
 
 
-num_to_generate = 100
-
-## Layers colors
-
-lens_colors = [ 
-    "#064cee",
-    "#00477a",
-    "#545df3",
-    "#5402ee",
-    "#ee8f00",
-    "#0000ee",
-    "#477a00",
-    "#0067b0",
-    "#00544d",
-    ]
-
-sclera_colors = [ 
-    "#dfeffa",
-    "#a7d8f5",
-    "#dbdbfd",
-    "#c5baee",
-    "#eec86b",
-    "#b2baee",
-    "#c0ff8b",
-    "#a1daff",
-    "#adfff4",
-]
-
-iris_colors = [
-    "#07a4f2",
-    "#51b0f3",
-    "#9faef9",
-    "#8b70ee",
-    "#eea706",
-    "#7180ee",
-    "#68b200",
-    "#0095ff",
-    "#47a1a4",
-]
-
-pupil_colors = [
-    "#030309", 
-    "#00243e",
-    "#3f3f7d",
-    "#280171",
-    "#714400",
-    "#000057",
-    "#1d3100",
-    "#00223a",
-    "#002d29",
-]
+num_to_generate = 3333
 
 # Background files from layers/backgrounds/ folder
 backgrounds = [
-    "Group 1.png",
-    "Group 2.png", 
-    "Group 3.png",
-    "Group 4.png",
-    "Group 5.png",
-    "Group 6.png",
-    "Group 7.png",
-    "Group 8.png",
-    "Group 9.png"
+    "Backdrop 1.png",
+    "Backdrop 2.png", 
+    "Backdrop 3.png",
+    "Backdrop 4.png",
+    "Backdrop 5.png",
+    "Backdrop 6.png",
+    "Backdrop 7.png",
+    "Backdrop 8.png",
+    "Backdrop 9.png"
 ]
 
 # Layer files from each folder
-lens_files = [
-    "g1-1.svg",
-    "g1-2.svg", 
-    "g1-3.svg",
-    "g1-4.svg",
-    "g1-5.svg",
-    "g1-6.svg",
-    "g1-7.svg",
-    "g1-8.svg",
-    "g1.svg"
+lens = [
+    "Lens 1 Sky.png",
+    "Lens 1 Soil.png",
+    "Lens 1.png",
+    "Lens 2 Sky.png",
+    "Lens 2 Soil.png",
+    "Lens 2.png",
+    "Lens 3 Sky.png",
+    "Lens 3 Soil.png",
+    "Lens 3.png",
+    "Lens 4 Sky.png",
+    "Lens 4 Soil.png",
+    "Lens 4.png",
+    "Lens 5 Sky.png",
+    "Lens 5 Soil.png",
+    "Lens 5.png",
+    "Lens 6 Sky.png",
+    "Lens 6 Soil.png",
+    "Lens 6.png",
+    "Lens 7 Sky.png",
+    "Lens 7 Soil.png",
+    "Lens 7.png",
+    "Lens 8 Sky.png",
+    "Lens 8 Soil.png",
+    "Lens 8.png",
+    "Lens 9 Sky.png",
+    "Lens 9 Soil.png",
+    "Lens 9.png"
 ]
 
-sclera_files = [
-    "g1-1.svg",
-    "g1-2.svg", 
-    "g1-3.svg",
-    "g1-4.svg",
-    "g1-5.svg",
-    "g1-6.svg",
-    "g1-7.svg",
-    "g1-8.svg",
-    "g1.svg"
+sclera = [
+    "Sclera 1.png",
+    "Sclera 2.png",
+    "Sclera 3.png",
+    "Sclera 4.png",
+    "Sclera 5.png",
+    "Sclera 6.png",
+    "Sclera 7.png",
+    "Sclera 8.png",
+    "Sclera 9.png"
 ]
 
-iris_files = [
-    "g1-1.svg",
-    "g1-2.svg", 
-    "g1-3.svg",
-    "g1-4.svg",
-    "g1-5.svg",
-    "g1-6.svg",
-    "g1-7.svg",
-    "g1-8.svg",
-    "g1.svg"
+iris = [
+    "Iris 1 Saltwater.png",
+    "Iris 1.png",
+    "Iris 2 Saltwater.png",
+    "Iris 2.png",
+    "Iris 3 Saltwater.png",
+    "Iris 3.png",
+    "Iris 4 Saltwater.png",
+    "Iris 4.png",
+    "Iris 5 Saltwater.png",
+    "Iris 5.png",
+    "Iris 6 Saltwater.png",
+    "Iris 6.png",
+    "Iris 7 Saltwater.png",
+    "Iris 7.png",
+    "Iris 8 Saltwater.png",
+    "Iris 8.png",
+    "Iris 9 Saltwater.png",
+    "Iris 9.png"
 ]
 
-pupil_files = [
-    "g1-1.png",
-    "g1-2.png", 
-    "g1-3.png",
-    "g1-4.png",
-    "g1-5.png",
-    "g1-6.png",
-    "g1-7.png",
-    "g1-8.png",
-    "g1.png"
+pupil = [
+    "Pupil 1.png",
+    "Pupil 2.png",
+    "Pupil 3.png",
+    "Pupil 4.png",
+    "Pupil 5.png",
+    "Pupil 6.png",
+    "Pupil 7.png",
+    "Pupil 8.png",
+    "Pupil 9.png"
 ]
+
+jsons = []
+
+# Create jsons directory if it doesn't exist
+os.makedirs("jsons", exist_ok=True)
 
 # Generate random eye images
 for i in range(num_to_generate):
     # Randomly select a background
     background = random.choice(backgrounds)
 
-    # Randomly select a lens color
-    lens_color = random.choice(lens_colors)
+    # Randomly select a lens
+    lens_file = random.choice(lens)
 
-    # Randomly select a sclera color
-    sclera_color = random.choice(sclera_colors)
+    # Randomly select a sclera 
+    sclera_file = random.choice(sclera)
 
-    # Randomly select an iris color
-    iris_color = random.choice(iris_colors)
+    # Randomly select an iris 
+    iris_file = random.choice(iris)
 
-    # Randomly select a pupil color
-    pupil_color = random.choice(pupil_colors)
-
-    # Randomly select layer files
-    lens_file = random.choice(lens_files)
-    sclera_file = random.choice(sclera_files)
-    iris_file = random.choice(iris_files)
-    pupil_file = random.choice(pupil_files)
+    # Randomly select a pupil 
+    pupil_file = random.choice(pupil)
 
     # Load background image
     background_image = Image.open(f"layers/backgrounds/{background}")
     
-    # For now, let's work with just the pupil layer since it's PNG
-    # TODO: Fix SVG handling when cairo library is properly installed
-    pupil = Image.open(f"layers/Pupil/{pupil_file}")
+    # Load lens image
+    lens_image = Image.open(f"layers/Lens/{lens_file}")
     
-    # Create placeholder images for other layers (same size as pupil)
-    lens = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent
-    sclera = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent  
-    iris = Image.new('RGBA', pupil.size, (0, 0, 0, 0))  # Transparent
+    # Load sclera image
+    sclera_image = Image.open(f"layers/Sclera/{sclera_file}")
+    
+    # Load iris image
+    iris_image = Image.open(f"layers/Iris/{iris_file}")
+    
+    # Load pupil image
+    pupil_image = Image.open(f"layers/Pupil/{pupil_file}")
 
+    # nft json
+    eye_json = {
+        "description": "Malocchio to project you.", 
+        "image": "", 
+        "name": "Malocchio",
+        "attributes": [
+            {
+                "trait_type": "Background", 
+                "value": background
+            },
+            {
+                "trait_type": "Lens", 
+                "value": lens_file
+            },
+            {
+                "trait_type": "Sclera", 
+                "value": sclera_file
+            },
+            {
+                "trait_type": "Iris", 
+                "value": iris_file
+            },
+            {
+                "trait_type": "Pupil", 
+                "value": pupil_file
+            }
+        ]
+    }
+
+    jsons.append(eye_json)
+    
     # Combine layers
     combined_image = background_image.copy()
-    combined_image.paste(lens, (0, 0), lens)    
-    combined_image.paste(sclera, (0, 0), sclera)
-    combined_image.paste(iris, (0, 0), iris)
-    combined_image.paste(pupil, (0, 0), pupil)
+    combined_image.paste(lens_image, (0, 0), lens_image)    
+    combined_image.paste(sclera_image, (0, 0), sclera_image)
+    combined_image.paste(iris_image, (0, 0), iris_image)
+    combined_image.paste(pupil_image, (0, 0), pupil_image)
     
-    
-    # Save the combined image
-    output_filename = f"eye_{i+1:04d}.png"
+    # Save the combined image malocchio0001.png
+    output_filename = f"malocchio{i+1:04d}.png"
     combined_image.save(f"export/{output_filename}")
+    # write json to file in ./jsons/malocchio#.json
+    with open(f"jsons/malocchio{i+1:04d}.json", "w") as f:
+        json.dump(eye_json, f)
     
     print(f"Generated {output_filename}")
+
+# check if any of the jsons traits are the same and print the ones that are
+for i in range(len(jsons)):
+    if i % 10 == 0:
+        print(f"Checking jsons {i+1} of {len(jsons)}")
+    for j in range(i+1, len(jsons)):
+        if jsons[i]["attributes"] == jsons[j]["attributes"]:
+            print(f"Jsons {i+1} and {j+1} are the same")
+            print(jsons[i]["attributes"])
+            print(jsons[j]["attributes"])
+            print("--------------------------------")
