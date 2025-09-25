@@ -106,8 +106,7 @@ jsons = []
 # Create jsons directory if it doesn't exist
 os.makedirs("jsons", exist_ok=True)
 
-# Generate random eye images
-for i in range(num_to_generate):
+def generate_eye(id):
     # Randomly select a background
     background = random.choice(backgrounds)
 
@@ -140,12 +139,12 @@ for i in range(num_to_generate):
 
     # nft json
     eye_json = {
-        "description": "Malocchio to project you.", 
+        "description": "An authentic Eye of Nazar.", 
         "image": "", 
         "name": "Malocchio",
         "attributes": [
             {
-                "trait_type": "Background", 
+                "trait_type": "Backdrop", 
                 "value": background
             },
             {
@@ -166,6 +165,7 @@ for i in range(num_to_generate):
             }
         ]
     }
+    eye_json["name"] = f"Malocchio {id:04d}"
 
     jsons.append(eye_json)
     
@@ -177,14 +177,20 @@ for i in range(num_to_generate):
     combined_image.paste(pupil_image, (0, 0), pupil_image)
     
     # Save the combined image malocchio0001.png
-    output_filename = f"malocchio{i+1:04d}.png"
+    output_filename = f"malocchio{id:04d}.png"
     combined_image.save(f"export/{output_filename}")
     # write json to file in ./jsons/malocchio#.json
-    with open(f"jsons/malocchio{i+1:04d}.json", "w") as f:
+    with open(f"jsons/malocchio{id:04d}.json", "w") as f:
         json.dump(eye_json, f)
     
     print(f"Generated {output_filename}")
 
+# Generate random eye images
+for i in range(num_to_generate):
+    generate_eye(i+1)
+
+
+duplicateList = []
 # check if any of the jsons traits are the same and print the ones that are
 for i in range(len(jsons)):
     if i % 10 == 0:
@@ -195,3 +201,27 @@ for i in range(len(jsons)):
             print(jsons[i]["attributes"])
             print(jsons[j]["attributes"])
             print("--------------------------------")
+            duplicateList.append(i+1)
+            duplicateList.append(j+1)
+
+print(f"Duplicate list: {duplicateList}")
+
+# while duplicateList is not empty
+while duplicateList:
+    #check if the duplicate is in the jsons list
+    for i in range(len(jsons)):
+        if i % 10 == 0:
+            print(f"Checking jsons {i+1} of {len(jsons)}")
+    for j in range(i+1, len(jsons)):
+        if jsons[i]["attributes"] == jsons[j]["attributes"]:
+            print(f"Jsons {i+1} and {j+1} are the same")
+            print(jsons[i]["attributes"])
+            print(jsons[j]["attributes"])
+            print("--------------------------------")
+            duplicateList.append(i+1)
+            duplicateList.append(j+1)
+    
+    print(f"Regenerating duplicate {duplicateList[0]}")
+    generate_eye(duplicateList.pop(0))
+    print(f"Regenerating duplicate {duplicateList[0]}")
+    generate_eye(duplicateList.pop(0))
