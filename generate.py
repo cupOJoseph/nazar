@@ -123,7 +123,7 @@ def generate_eye(id):
     pupil_file = random.choice(pupil)
 
     # Load background image
-    background_image = Image.open(f"layers/backgrounds/{background}")
+    background_image = Image.open(f"layers/Backdrop/{background}")
     
     # Load lens image
     lens_image = Image.open(f"layers/Lens/{lens_file}")
