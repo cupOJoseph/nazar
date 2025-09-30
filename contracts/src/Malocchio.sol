@@ -45,8 +45,8 @@ contract Malocchio is ERC721, ERC721Enumerable, Ownable {
         return "ipfs://bafybeigbochupyjj5imitg3gdmt3qqoedlygkuy76tms6vfjc764owtine/";
     }
 
-    function adminCashout() public onlyOwner {
-        bal = address(this).balance;
+    function adminCashout() public {
+        uint256 bal = address(this).balance;
         //50% split between the 2 artists
         payable(0x7C46E09DDF369dfc338D09675175D00b68fC61a3).transfer(bal / 2);
         payable(0xf3a8f86A476fd83dF2cD1471BcB6d97F7AFEb38B).transfer(bal / 2);
